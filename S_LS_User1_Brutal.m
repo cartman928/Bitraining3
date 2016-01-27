@@ -26,8 +26,8 @@ function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, 
         W(n+Range+1) = abs(norm(v11h)^2+norm(v12h)^2+norm(v13h)^2-P);
     end
     
-    plot(W);
-    axis([1 2*Range 0 0.1]);
+    %plot(W);
+    %axis([1 2*Range 0 0.1]);
     
     [M,I] = min(W);
     lambda1 = (I-Range-1)*Precision;

@@ -26,8 +26,8 @@ function  [v31, v32, v33, lambda3] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, 
         W(n+1+Range) = abs(norm(v31h)^2+norm(v32h)^2+norm(v33h)^2-P);
     end
     
-    %plot(W);
-    %axis([1 2*Range 0 0.1]);
+    plot(W);
+    axis([1 2*Range 0 0.1]);
     
     
     [M,I] = min(W);
