@@ -1,13 +1,11 @@
-function  [v21, v22, v23] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3)
+function  [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3, Range, Precision)
 %update filters by sudo-LS algorithm 
 
     %Power Constraint
     P = 1;
 
     %brutal-force search for lambda1 
-    Range = 10000;
-    Precision = 0.0001;
-    %-1/+1
+
     for n = -Range:Range
 
         v21h = ...

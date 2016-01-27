@@ -1,13 +1,11 @@
-function  [v11, v12, v13] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3)
+function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3, Range, Precision)
 %update filters by sudo-LS algorithm 
 
     %Power Constraint
     P = 1;
 
     %brutal-force search for lambda1 
-    Range = 10000;
-    Precision = 0.0001;
-    %-1/+1
+ 
     for n = -Range:Range
 
         v11h = ...
@@ -28,8 +26,8 @@ function  [v11, v12, v13] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31,
         W(n+Range+1) = abs(norm(v11h)^2+norm(v12h)^2+norm(v13h)^2-P);
     end
     
-    %plot(W);
-    %axis([1 2*Range 0 0.1]);
+    plot(W);
+    axis([1 2*Range 0 0.1]);
     
     [M,I] = min(W);
     lambda1 = (I-Range-1)*Precision;
