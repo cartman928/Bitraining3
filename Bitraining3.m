@@ -71,7 +71,7 @@ for Realization = 1 : N_Realizations
             
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
-            for k1 = 1 : 10
+            for k1 = 1 : 1
             k1
             [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3, 20000, 0.0001);
             [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3, 20000, 0.0001);
@@ -85,7 +85,7 @@ for Realization = 1 : N_Realizations
 
 
             %%Forward Training: LS Algorithm
-            [g1, g2] = LS(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
+            [g1, g2, g3] = LS(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);
             %norm(g1)^2
             %norm(g2)^2
 
