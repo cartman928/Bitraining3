@@ -1,4 +1,4 @@
-function  [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3, Range, Precision)
+function  [v21, v22, v23, lambda2, W2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3, Range, Precision)
 %update filters by sudo-LS algorithm 
 
     %Power Constraint
@@ -24,6 +24,7 @@ function  [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, 
             -g3'*H32*(g3'*(H31*v13+H33*v33))'*w3)/(  H12'*g1*g1'*H12*w1 + H22'*g2*g2'*H22*w2 + H32'*g3*g3'*H32*w3 + (n'*Precision)*eye(2));
 
         W(n+Range+1) = abs(norm(v21h)^2+norm(v22h)^2+norm(v23h)^2-P);
+        W2(n+Range+1) = norm(v21h)^2+norm(v22h)^2+norm(v23h)^2;
     end
     
     %plot(W);
