@@ -11,7 +11,7 @@ w3 = 1;
 n0 = 10^(-2);    %noise variance
 
 iternums = 1:20; % number of iterations
-N_Realizations = 100;
+N_Realizations = 10;
 
 C1 = zeros(N_Realizations, length(iternums));
 C2 = zeros(N_Realizations, length(iternums));
@@ -58,31 +58,47 @@ for Realization = 1 : N_Realizations
             Range = 4000;
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
-            for k1 = 1 : 100
-            k1    
-            [v11, v12, v13, lambda1, W1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3, 4000, 0.001);
-            [v21, v22, v23, lambda2, W2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3, 4000, 0.001);
-            [v31, v32, v33, lambda3, W3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v21, v22, v23, n0, w1, w2, w3, 4000, 0.001);
+            for k1 = 1 : 150
+            k1 
+            v11_o = v11;
+            v12_o = v12;
+            v13_o = v13;
+            v21_o = v21;
+            v22_o = v22;
+            v23_o = v23;
+            v31_o = v31;
+            v32_o = v32;
+            v33_o = v33;
             
-            [v11, v12, v13]
+            [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3);
+            [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3);
+            [v31, v32, v33, lambda3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v21, v22, v23, n0, w1, w2, w3);
+          
+            %[v11, v12, v13]
             %[v21, v22, v23]
             %[v31, v32, v33]
-            %Power = [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
+            Power = [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
             %Lambda = [lambda1 lambda2 lambda3]
+            
+            %Convergence Detector
+            if( (norm(v11-v11_o)+norm(v12-v12_o)+norm(v13-v13_o)+norm(v21-v21_o)+norm(v22-v22_o)+norm(v23-v23_o)+norm(v31-v31_o)+norm(v32-v32_o)+norm(v33-v33_o)) < 10^(-4)  )
+            disp('converges!');
+            break;%break the for loop if it's true the condition
+            end
             
             %{
             subplot(3,1,1);
             drawnow
             plot(W1);
             drawnow
-            axis([1 2*Range 0.9 1.1])
+            axis([1 2*Range 0 10])
             drawnow
             
             subplot(3,1,2);
             drawnow
             plot(W2);
             drawnow
-            axis([1 2*Range 0.9 1.1])
+            axis([1 2*Range 0 10])
             drawnow
             
             
@@ -90,7 +106,7 @@ for Realization = 1 : N_Realizations
             drawnow
             plot(W3);
             drawnow
-            axis([1 2*Range 0.9 1.1])
+            axis([1 2*Range 0 10])
             drawnow
             %}
             end
@@ -122,7 +138,7 @@ end
 
 p1=plot(iternums, mean(C1)+mean(C2)+mean(C3),'--');
 
-axis([1 numiters 0 20])
+axis([1 numiters 0 25])
 
 xlabel('Number of iterations')
 ylabel('C(bits/channel)')
