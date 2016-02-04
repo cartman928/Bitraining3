@@ -33,7 +33,7 @@ function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, 
    [M1,I1] = min(W1);
     lambda1 = (I1-101)*Precision1;
     
-    %Second-Round Search:-0.1~+0.1(0.001)
+    %Second-Round Search:-0.1(0.001)
     Precision2 = 0.001;
     for n = -100:100
 
@@ -53,11 +53,12 @@ function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, 
             -g3'*H31*(g3'*(H32*v23+H33*v33))'*w3)/(  H11'*g1*g1'*H11*w1 + H21'*g2*g2'*H21*w2 + H31'*g3*g3'*H31*w3 + (n'*Precision2+lambda1)*eye(2));
         
         W2(n+101) = abs(P-(norm(v11h)^2+norm(v12h)^2+norm(v13h)^2));
+     
     end
     [M2,I2] = min(W2);
     lambda1 = (I2-101)*Precision2+lambda1;
 
-%Second-Round Search:-0.001~+0.001(0.00001)
+%Third-Round Search:-0.001(0.00001)
     Precision3 = 0.00001;
     for n = -100:100
 
