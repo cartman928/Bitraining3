@@ -24,7 +24,11 @@ function  [v31, v32, v33, lambda3] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, 
             -g2'*H23*(g2'*(H21*v13+H22*v23))'*w2...
             -g3'*H33*(g3'*(H31*v13+H32*v23))'*w3)/(  H13'*g1*g1'*H13*w1 + H23'*g2*g2'*H23*w2 + H33'*g3*g3'*H33*w3 + (n'*Precision1)*eye(2));
 
-        W1(n+101) = abs(norm(v31h)^2+norm(v32h)^2+norm(v33h)^2-P);
+        if (P-(norm(v31h)^2+norm(v32h)^2+norm(v33h)^2)) < 0
+        W1(n+101) = 10;
+        else
+        W1(n+101) = P-(norm(v31h)^2+norm(v32h)^2+norm(v33h)^2);
+        end
     end
     [M1,I1] = min(W1);
     lambda3 = (I1-101)*Precision1;
