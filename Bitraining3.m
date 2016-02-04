@@ -69,6 +69,7 @@ for Realization = 1 : N_Realizations
             v32_o = v32;
             v33_o = v33;
             
+            %throw dice
             %{
             z1 = rand;
             if z1 <= (1/3)
@@ -104,9 +105,9 @@ for Realization = 1 : N_Realizations
             end
             %}
 
-            [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3);
-            [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3);
-            [v31, v32, v33, lambda3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v21, v22, v23, n0, w1, w2, w3);
+            [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21_o, v22_o, v23_o, v31_o, v32_o, v33_o, n0, w1, w2, w3);
+            [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11_o, v12_o, v13_o, v31_o, v32_o, v33_o, n0, w1, w2, w3);
+            [v31, v32, v33, lambda3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11_o, v12_o, v13_o, v21_o, v22_o, v23_o, n0, w1, w2, w3);
             
           
             %[v11, v12, v13]
