@@ -10,8 +10,8 @@ w2 = 1;
 w3 = 1;
 n0 = 10^(-2);    %noise variance
 
-iternums = 1:20; % number of iterations
-N_Realizations = 10;
+iternums = 1:50; % number of iterations
+N_Realizations = 100;
 
 C1 = zeros(N_Realizations, length(iternums));
 C2 = zeros(N_Realizations, length(iternums));
@@ -57,7 +57,7 @@ for Realization = 1 : N_Realizations
         %% bi-directional training
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
-            for k1 = 1 : 500
+            for k1 = 1 : 50
             Loops = [Realization numiters k1] 
             v11_o = v11;
             v12_o = v12;
@@ -105,9 +105,9 @@ for Realization = 1 : N_Realizations
             end
             %}
 
-            [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21_o, v22_o, v23_o, v31_o, v32_o, v33_o, n0, w1, w2, w3);
-            [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11_o, v12_o, v13_o, v31_o, v32_o, v33_o, n0, w1, w2, w3);
-            [v31, v32, v33, lambda3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11_o, v12_o, v13_o, v21_o, v22_o, v23_o, n0, w1, w2, w3);
+            [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3);
+            [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3);
+            [v31, v32, v33, lambda3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v21, v22, v23, n0, w1, w2, w3);
             
           
             %[v11, v12, v13]
@@ -147,8 +147,46 @@ for Realization = 1 : N_Realizations
             drawnow
             %}
             end
-            
+%{
+M1 = sqrt(norm(v11)^2+norm(v12)^2+norm(v13)^2);
+M2 = sqrt(norm(v21)^2+norm(v22)^2+norm(v23)^2);
+M3 = sqrt(norm(v31)^2+norm(v32)^2+norm(v33)^2);
 
+M = max([M1 M2 M3]);
+
+v11 = v11/M;
+v12 = v12/M;
+v13 = v13/M;
+
+
+v21 = v21/M;
+v22 = v22/M;
+v23 = v23/M;
+
+
+v31 = v31/M;
+v32 = v32/M;
+v33 = v33/M;
+%}
+
+
+%%%%
+%{
+M1 = sqrt(norm(v11)^2+norm(v12)^2+norm(v13)^2);
+v11 = v11/M1;
+v12 = v12/M1;
+v13 = v13/M1;
+
+M2 = sqrt(norm(v21)^2+norm(v22)^2+norm(v23)^2);
+v21 = v21/M2;
+v22 = v22/M2;
+v23 = v23/M2;
+
+M3 = sqrt(norm(v31)^2+norm(v32)^2+norm(v33)^2);
+v31 = v31/M3;
+v32 = v32/M3;
+v33 = v33/M3;
+%}
 
             %%Forward Training: LS Algorithm
             [g1, g2, g3] = LS(H11, H12, H13, H21, H22, H23, H31, H32, H33, v11, v12, v13, v21, v22, v23, v31, v32, v33, n0);

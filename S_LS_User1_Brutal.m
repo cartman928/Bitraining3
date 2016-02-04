@@ -1,4 +1,5 @@
 function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v21, v22, v23, v31, v32, v33, n0, w1, w2, w3)
+%{
 %update filters by sudo-LS algorithm 
 
     %Power Constraint
@@ -81,8 +82,9 @@ function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, 
     end
     [M3,I3] = min(W3);
     lambda1 = (I3-101)*Precision3+lambda1;
-    
-    
+%}    
+%%%%%
+lambda1 = 0;
     
 %%  
         v11h = ...
@@ -103,6 +105,8 @@ function  [v11, v12, v13, lambda1] = S_LS_User1_Brutal(H11, H12, H13, H21, H22, 
         v11 = v11h';
         v12 = v12h';
         v13 = v13h';    
+
+
 end
 
     
