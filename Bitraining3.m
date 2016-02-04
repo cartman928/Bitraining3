@@ -55,10 +55,9 @@ for Realization = 1 : N_Realizations
     for numiters = 1:length(iternums)
         
         %% bi-directional training
-            Range = 4000;
             %%Backward Training: sudo-LS Algorithm
             %abs(error)<2*10^(-4)
-            for k1 = 1 : 150
+            for k1 = 1 : 500
             k1 
             v11_o = v11;
             v12_o = v12;
@@ -74,7 +73,7 @@ for Realization = 1 : N_Realizations
             [v21, v22, v23, lambda2] = S_LS_User2_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v31, v32, v33, n0, w1, w2, w3);
             [v31, v32, v33, lambda3] = S_LS_User3_Brutal(H11, H12, H13, H21, H22, H23, H31, H32, H33, g1, g2, g3, v11, v12, v13, v21, v22, v23, n0, w1, w2, w3);
           
-            %[v11, v12, v13]
+            [v11, v12, v13]
             %[v21, v22, v23]
             %[v31, v32, v33]
             Power = [norm(v11)^2+norm(v12)^2+norm(v13)^2 norm(v21)^2+norm(v22)^2+norm(v23)^2 norm(v31)^2+norm(v32)^2+norm(v33)^2]
